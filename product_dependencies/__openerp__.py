@@ -34,13 +34,13 @@ This module is primarily used by the contract_isp_wizard module to create produc
 
 This module is not related to the manufacturing process or the Bill of Materials.""",
     'author': "Savoirfaire-Linux Inc,Odoo Community Association (OCA)",
-    'contributor': ['Juan Ignacio Úbeda (Aizean Evolution)']	
+    'contributors': ['Juan Ignacio Úbeda <juani@aizean.com>'],	
     'website': 'www.savoirfairelinux.com',
     'license': 'AGPL-3',
     'depends': ['product'],
     'data': [
         'security/ir.model.access.csv',
-        'product_dependencies_view.xml'
+        'views/product_dependencies_view.xml'
     ],
     'active': False,
     'installable': True,
