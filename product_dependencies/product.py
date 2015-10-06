@@ -20,10 +20,57 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
+#from openerp.osv import orm, fields
 
-class product_dependency(orm.Model):
+class ProductDependency(models.Model)
+    _name = 'product.dependency'
+
+    name = fields.Char(string='Name')
+    ptype = fields.Selection([('product', 'Product', default='product'),
+                                'category', 'Category']), 'Type')
+    product_id = fields.Many2one('product.product', string='Product Dependency')
+    category_id = fields.Many2one('product.category', string='Category Dependency')
+    auto = fields.Boolean(string='Automatically added')
+
+    @api.onchange('ptype')
+    def onchange_type(self):
+        values = {'value': {}}
+        if self.ptype == 'product':
+            values['value']['category_id'] = None
+        elif self.ptype == 'category_id':
+            values['value']['product_id'] = None
+        values['name'] = ''
+        return values
+
+    @api.onchange('product_id')    
+    def onchange_product_id(self):
+        values = {'value': {'name': None}}
+        if self.product_id:
+            product = self.env['product.product']
+            name = product.name
+            values['value']['name'] = '%s (Product)' % name
+        return values
+
+    @api.onchange('category_id')
+    def onchange_category_id(self):
+        values = {'value': {'name': None}}
+        if self.category_id:
+            category = self.env['product.category']
+            name = category.name
+            values['value']['name'] = '%s (Category)' % name
+        return values
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    dependency_ids = fields.Many2many(comodel_name='product.dependency',
+                                      relation='product_product_dependency_rel',
+                                      column1='dependency_id',
+                                      column2='product_id'), string='Dependencies')
+    
+"""class product_dependency(orm.Model):
     _name = 'product.dependency'
 
     _columns = {
@@ -69,10 +116,10 @@ class product_dependency(orm.Model):
                 cr, uid, category_id, context={}).name
             values['value']['name'] = '%s (Category)' % name
 
-        return values
+        return values"""
 
 
-class product_product(orm.Model):
+"""class product_product(orm.Model):
     _inherit = 'product.product'
 
     _columns = {
@@ -82,3 +129,4 @@ class product_product(orm.Model):
                                            'product_id',
                                            string='Dependencies')
     }
+"""
