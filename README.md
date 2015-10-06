@@ -12,6 +12,5 @@ addon | version | summary
 [contract_isp_automatic_invoicing](__unported__/contract_isp_automatic_invoicing/) | 1.0 (unported) | Contract ISP Automatic Invoicing
 [contract_isp_invoice](__unported__/contract_isp_invoice/) | 1.0 (unported) | Contract ISP Invoice
 [contract_isp_package_configurator](__unported__/contract_isp_package_configurator/) | 1.0 (unported) | Contract ISP Package Configurator
-[product_dependencies](__unported__/product_dependencies/) | 1.0.1 (unported) | Product Dependencies
 
 [//]: # (end addons)
